@@ -1,0 +1,178 @@
+{%extends 'base.html'%}
+
+{%block head%}
+
+{%endblock%}
+<style>
+    body{margin-top:20px;}
+
+.align-center {
+    text-align: center;
+}
+.hash-list {
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px){
+    .hash-list.cols-3 > li:nth-last-child(-n+3) {
+        border-bottom: none;
+    }
+}
+@media (min-width: 768px){
+    .hash-list.cols-3 > li {
+        width: 33.3333%;
+    }
+}
+.hash-list > li {
+    display: block;
+    float: left;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.pad-30, .pad-30-all > * {
+    padding: 30px;
+}
+img {
+    border: 0;
+}
+.mgb-20, .mgb-20-all > * {
+    margin-bottom: 20px;
+}
+.wpx-100, .wpx-100-after:after {
+    width: 100px;
+}
+.img-round, .img-rel-round {
+    border-radius: 50%;
+}
+.padb-30, .padb-30-all > * {
+    padding-bottom: 30px;
+}
+
+.mgb-40, .mgb-40-all > * {
+    margin-bottom: 40px;
+}
+.align-center {
+    text-align: center;
+}
+[class*="line-b"] {
+    position: relative;
+    padding-bottom: 20px;
+    border-color: #E6AF2A;
+}
+.fg-text-d, .fg-hov-text-d:hover, .fg-active-text-d.active {
+    color: #222;
+}
+.font-cond-b {
+    font-weight: 700 !important;
+}
+</style>
+
+{%block home%}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                {%if product.image%}
+                <img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." />
+
+                {%else%}
+                <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg" alt="..." />
+
+                {%endif%}
+                
+            </div>
+            <div class="col-md-6">
+                <div class="small mb-1">SKU: BST-498</div>
+                <h1 class="display-5 fw-bolder">{{product.product_name}}</h1>
+                <div class="fs-5 mb-5">
+                    
+                    <span>Rs{{product.price}}</span>
+                </div>
+                <p class="lead">{{product.discription}}</p>
+                <div class="d-flex">
+                    <form action="{%url 'cart-add' product.id%}" method="post">
+                        {%csrf_token%}
+                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" name="qty" />
+                    <button class="btn btn-outline-dark flex-shrink-0" type="submit">
+                        <i class="bi-cart-fill me-1"></i>
+                        Add to cart
+                    </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+       <h4 class="text-center mt-5">Reviews</h4>
+
+       <!-- {%for r in product.reviews%}
+        {{r.comment}}
+        {{r.rating}}
+        {{r.user}}
+       {%endfor%} -->
+       
+       <section>
+        <div class="row text-center mt-5">
+        {%for r in product.reviews%}    
+          <div class="col-md-4">
+            <!-- Carousel wrapper -->
+            
+
+            <div id="carouselBasicExample" class="carousel slide carousel-dark" data-mdb-ride="carousel">
+              <!-- Inner -->
+              <div class="carousel-inner">
+                <!-- Single item -->
+                
+                <div class="carousel-item active">
+                  <i class="lead font-italic mx-4 mx-md-5">
+                    " {{r.comment}}"
+                  </i>
+                  <br>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+                    <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+                  </svg>  {{r.rating}}
+                  <div class="mt-5 mb-4">
+                    <img src="https://www.shutterstock.com/image-vector/approved-certified-icon-seal-260nw-1042187263.jpg"
+                      class="rounded-circle img-fluid shadow-1-strong" alt="smaple image" width="100"
+                      height="100" />
+                  </div>
+                  <p class="text-muted mb-0">- {{r.user}}</p>
+
+                  
+                </div>
+               
+                <!-- Single item -->
+                
+              <!-- Inner -->
+      
+              <!-- Controls -->
+              
+            </div>
+            
+            <!-- Carousel wrapper -->
+          </div>
+        </div>
+        {%endfor%}
+        <div mt-5>
+            <br><br>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
+            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+          </svg> 
+        <strong>Avarage rating{{product.avg_rating}}</strong>
+        </div>
+       
+      </section>
+      
+        
+        
+        
+            
+        
+        
+    </div>
+</section>
+
+{%endblock%}
+
+
